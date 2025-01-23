@@ -1,5 +1,5 @@
 from flask import Flask
-from .jobs import jobs_bp
+from .api.jobs import jobs_bp
 
 
 def create_app():

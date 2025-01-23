@@ -1,10 +1,7 @@
-# A very simple Flask Hello World app for you to get started with...
+from flask import jsonify
+from app import app
 
-from flask import Flask, jsonify
-
-app = Flask(__name__)
-
-# Sample jobs data - we can move this to a database later
+# Sample jobs data
 JOBS = [
     {
         "id": 1,
@@ -33,7 +30,3 @@ def home():
 @app.route("/api/jobs")
 def get_jobs():
     return jsonify({"jobs": JOBS})
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

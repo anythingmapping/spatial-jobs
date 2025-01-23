@@ -11,17 +11,16 @@ CORS(
         "http://localhost:5173",  # Vite's default port
         "http://localhost:3000",  # For local development
         "https://anythingmapping.pythonanywhere.com",  # Your production domain
+        "https://spatial-jobs.vercel.app",  # If you deploy frontend to Vercel
     ],
 )
 
 
 @app.route("/")
 def home():
-    # Redirect root to the frontend in development
-    if app.debug:
-        return redirect("http://localhost:5173")
-    # In production, redirect to your frontend URL
-    return redirect("https://your-frontend-url.com")
+    # In production, we'll just return the API welcome message
+    # since the frontend will be hosted separately
+    return jsonify({"message": "Welcome to the Spatial Jobs API"})
 
 
 @app.route("/api")
@@ -30,4 +29,4 @@ def api_home():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)  # Changed port to 8000
+    app.run(debug=True, port=8000)

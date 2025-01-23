@@ -21,9 +21,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const API_URL = import.meta.env.MODE === 'development' 
-  ? 'http://localhost:8000'
-  : 'https://anythingmapping.pythonanywhere.com';
+const API_URL = 'https://anythingmapping.pythonanywhere.com'
 
 const jobs = ref([])
 const loading = ref(true)

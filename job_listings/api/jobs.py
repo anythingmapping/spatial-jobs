@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 
-# Create a blueprint for jobs
-jobs_bp = Blueprint("jobs", __name__)
+# Create a blueprint for jobs with url_prefix='/api'
+jobs_bp = Blueprint("jobs", __name__, url_prefix="/api")
 
 # Sample jobs data - we can move this to a database later
 JOBS = [
@@ -24,6 +24,6 @@ JOBS = [
 ]
 
 
-@jobs_bp.route("/api/jobs")
+@jobs_bp.route("/jobs")
 def get_jobs():
     return jsonify({"jobs": JOBS})

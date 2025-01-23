@@ -1,6 +1,6 @@
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import jsonify, redirect
+from flask import jsonify
 from flask_cors import CORS
 from job_listings import create_app
 
@@ -11,7 +11,6 @@ CORS(
         "http://localhost:5173",  # Vite's default port
         "http://localhost:3000",  # For local development
         "https://anythingmapping.pythonanywhere.com",  # Your production domain
-        "https://spatial-jobs.vercel.app",  # If you deploy frontend to Vercel
     ],
 )
 

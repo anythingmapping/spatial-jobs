@@ -1,8 +1,9 @@
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import jsonify
+from flask import jsonify, send_from_directory, redirect
 from flask_cors import CORS
 from job_listings import create_app
+import os
 
 app = create_app()
 CORS(
@@ -15,11 +16,13 @@ CORS(
 )
 
 
-@app.route("/")
-def home():
-    # In production, we'll just return the API welcome message
-    # since the frontend will be hosted separately
-    return jsonify({"message": "Welcome to the Spatial Jobs API"})
+# Serve Vue frontend
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve(path):
+    if path and os.path.exists(app.static_folder + "/" + path):
+        return send_from_directory(app.static_folder, path)
+    return send_from_directory(app.static_folder, "index.html")
 
 
 @app.route("/api")

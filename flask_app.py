@@ -30,6 +30,13 @@ def home():
     return render_template("index.html", jobs=JOBS)
 
 
+@app.route("/stac")
+def stac():
+    from job_listings.api.jobs import JOBS
+
+    return render_template("stac.html", jobs=JOBS)
+
+
 @app.route("/api/jobs")
 def get_jobs():
     from job_listings.api.jobs import JOBS

@@ -28,7 +28,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         {% for job in jobs %}
-        var map = L.map('map-{{job.id}}').setView([{{ job.coordinates[1] }}, {{ job.coordinates[0] }}], 13);
+        var map = L.map('map-{{job.id}}').setView([{{ job.coordinates[1] }}, {{ job.coordinates[0] }}], 7);
 
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -45,6 +45,9 @@
     });
 
     L.marker([{{ job.coordinates[1] }}, {{ job.coordinates[0] }}], { icon: markerIcon }).addTo(map);
+
+
+
     {% endfor %}
     });
 </script>

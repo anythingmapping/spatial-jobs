@@ -13,6 +13,7 @@ JOBS = [
         "coordinates": [174.7633, -36.8485],  # Auckland
         "description": "Looking for an experienced GIS analyst for urban planning projects...",
         "posted_date": "2024-01-22",
+        "remote": False,
     },
     {
         "id": 2,
@@ -22,6 +23,7 @@ JOBS = [
         "coordinates": [174.7762, -41.2866],  # Wellington
         "description": "Seeking a specialist in satellite imagery analysis for environmental monitoring...",
         "posted_date": "2024-01-21",
+        "remote": True,
     },
     {
         "id": 3,
@@ -31,6 +33,7 @@ JOBS = [
         "coordinates": [172.6362, -43.5321],  # Christchurch
         "description": "Python developer with strong background in spatial databases...",
         "posted_date": "2024-01-20",
+        "remote": False,
     },
     {
         "id": 4,
@@ -40,6 +43,7 @@ JOBS = [
         "coordinates": [175.2793, -37.7870],  # Hamilton
         "description": "Experienced LiDAR data processing specialist needed...",
         "posted_date": "2024-01-19",
+        "remote": False,
     },
     {
         "id": 5,
@@ -49,6 +53,7 @@ JOBS = [
         "coordinates": [170.5036, -45.8788],  # Dunedin
         "description": "Creating beautiful and accurate maps for tourism sector...",
         "posted_date": "2024-01-18",
+        "remote": False,
     },
     {
         "id": 6,
@@ -58,6 +63,7 @@ JOBS = [
         "coordinates": [176.1651, -37.6878],  # Tauranga
         "description": "Environmental impact assessment and mapping...",
         "posted_date": "2024-01-17",
+        "remote": False,
     },
     {
         "id": 7,
@@ -67,6 +73,7 @@ JOBS = [
         "coordinates": [174.7762, -41.2866],  # Wellington
         "description": "Analyzing spatial patterns in urban development...",
         "posted_date": "2024-01-16",
+        "remote": True,
     },
     {
         "id": 8,
@@ -76,6 +83,7 @@ JOBS = [
         "coordinates": [176.9120, -39.4928],  # Napier
         "description": "Drone mapping and photogrammetry expert needed...",
         "posted_date": "2024-01-15",
+        "remote": False,
     },
     {
         "id": 9,
@@ -85,6 +93,7 @@ JOBS = [
         "coordinates": [173.2840, -41.2706],  # Nelson
         "description": "Consulting on GIS implementation for local government...",
         "posted_date": "2024-01-14",
+        "remote": False,
     },
     {
         "id": 10,
@@ -94,6 +103,7 @@ JOBS = [
         "coordinates": [174.7633, -36.8485],  # Auckland
         "description": "Managing and optimizing spatial databases...",
         "posted_date": "2024-01-13",
+        "remote": False,
     },
     {
         "id": 11,
@@ -103,6 +113,7 @@ JOBS = [
         "coordinates": [174.0752, -39.0556],  # New Plymouth
         "description": "Mapping marine ecosystems and coastal zones...",
         "posted_date": "2024-01-12",
+        "remote": False,
     },
     {
         "id": 12,
@@ -112,6 +123,7 @@ JOBS = [
         "coordinates": [175.6111, -40.3556],  # Palmerston North
         "description": "Property boundary surveys and legal documentation...",
         "posted_date": "2024-01-11",
+        "remote": False,
     },
 ]
 

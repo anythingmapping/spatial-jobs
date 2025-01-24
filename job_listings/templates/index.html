@@ -25,25 +25,26 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-<style>
-    .job-map {
-        height: 200px;
-        width: 100%;
-        margin: 10px 0;
-        border-radius: 4px;
-    }
-</style>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         {% for job in jobs %}
         var map = L.map('map-{{job.id}}').setView([{{ job.coordinates[1] }}, {{ job.coordinates[0] }}], 13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        maxZoom: 19
     }).addTo(map);
 
-    L.marker([{{ job.coordinates[1] }}, {{ job.coordinates[0] }}]).addTo(map);
+    var markerIcon = L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-{{ "red" if job.remote else "blue" }}.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    L.marker([{{ job.coordinates[1] }}, {{ job.coordinates[0] }}], { icon: markerIcon }).addTo(map);
     {% endfor %}
     });
 </script>

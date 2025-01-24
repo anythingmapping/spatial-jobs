@@ -6,7 +6,7 @@
     <div id="main-map" style="height: 400px; width: 100%; margin-bottom: 20px;"></div>
     <div class="jobs-grid">
         {% for job in jobs %}
-        <div class="job-card">
+        <div class="job-card" id="job-card-{{loop.index}}">
             <h2 class="job-title">{{job.title}}</h2>
             <div class="job-company">{{job.company}}</div>
             <div class="job-location">📍 {{job.location}}</div>
@@ -49,6 +49,16 @@
 
         var marker = L.marker([{{ job.coordinates[1] }}, {{ job.coordinates[0] }}], { icon: markerIcon })
         .bindPopup('<strong>{{job.title}}</strong><br>{{job.company}}<br>{{job.location}}')
+        .on('click', function () {
+            // Remove highlight from all cards
+            document.querySelectorAll('.job-card').forEach(card => {
+                card.classList.remove('highlighted');
+            });
+            // Add highlight to the corresponding card
+            const card = document.getElementById('job-card-{{loop.index}}');
+            card.classList.add('highlighted');
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        })
         .addTo(map);
 
     bounds.extend(marker.getLatLng());
@@ -58,4 +68,16 @@
     map.fitBounds(bounds, { padding: [50, 50] });
     });
 </script>
+
+<style>
+    .job-card {
+        transition: all 0.3s ease;
+    }
+
+    .job-card.highlighted {
+        background-color: #f0f7ff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        transform: scale(1.02);
+    }
+</style>
 {% endblock %}

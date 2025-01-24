@@ -6,16 +6,45 @@
     <div class="jobs-grid">
         {% for job in jobs %}
         <div class="job-card">
-            <h2 class="job-title">{{ job.title }}</h2>
-            <div class="job-company">{{ job.company }}</div>
-            <div class="job-location">📍 {{ job.location }}</div>
-            <p class="job-description">{{ job.description }}</p>
+            <h2 class="job-title">{{job.title}}</h2>
+            <div class="job-company">{{job.company}}</div>
+            <div class="job-location">📍 {{job.location}}</div>
+            <div id="map-{{job.id}}" class="job-map"></div>
+            <p class="job-description">{{job.description}}</p>
             <div class="job-footer">
-                <span class="job-date">Posted: {{ job.posted_date }}</span>
+                <span class="job-date">Posted: {{job.posted_date}}</span>
                 <button class="apply-button">Apply Now</button>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<style>
+    .job-map {
+        height: 200px;
+        width: 100%;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        {% for job in jobs %}
+        var map = L.map('map-{{job.id}}').setView([{{ job.coordinates[1] }}, {{ job.coordinates[0] }}], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([{{ job.coordinates[1] }}, {{ job.coordinates[0] }}]).addTo(map);
+    {% endfor %}
+    });
+</script>
 {% endblock %}

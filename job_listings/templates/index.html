@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jobs-container">
+    <h1>Spatial Jobs</h1>
+    <div class="jobs-grid">
+        {% for job in jobs %}
+        <div class="job-card">
+            <h2 class="job-title">{{ job.title }}</h2>
+            <div class="job-company">{{ job.company }}</div>
+            <div class="job-location">📍 {{ job.location }}</div>
+            <p class="job-description">{{ job.description }}</p>
+            <div class="job-footer">
+                <span class="job-date">Posted: {{ job.posted_date }}</span>
+                <button class="apply-button">Apply Now</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

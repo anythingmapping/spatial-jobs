@@ -1,6 +1,6 @@
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import jsonify
+from flask import jsonify, render_template
 from flask_cors import CORS
 from job_listings import create_app
 
@@ -25,12 +25,16 @@ CORS(
 
 @app.route("/")
 def home():
-    return jsonify({"message": "Welcome to the Spatial Jobs API"})
+    from job_listings.api.jobs import JOBS
+
+    return render_template("index.html", jobs=JOBS)
 
 
-@app.route("/api")
-def api_home():
-    return jsonify({"message": "Welcome to the Spatial Jobs API"})
+@app.route("/api/jobs")
+def get_jobs():
+    from job_listings.api.jobs import JOBS
+
+    return jsonify({"jobs": JOBS})
 
 
 if __name__ == "__main__":

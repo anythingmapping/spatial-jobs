@@ -21,7 +21,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const API_URL = 'https://anythingmapping.pythonanywhere.com'
+const API_URL = import.meta.env.DEV 
+  ? 'http://127.0.0.1:8000/api/jobs'
+  : 'https://anythingmapping.pythonanywhere.com/api/jobs'
 
 const jobs = ref([])
 const loading = ref(true)
@@ -29,7 +31,7 @@ const error = ref(null)
 
 onMounted(async () => {
   try {
-    const response = await fetch(`${API_URL}/api/jobs`)
+    const response = await fetch(`${API_URL}`)
     if (!response.ok) throw new Error('Failed to fetch jobs')
     const data = await response.json()
     jobs.value = data.jobs

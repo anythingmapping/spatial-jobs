@@ -7,11 +7,19 @@ from job_listings import create_app
 app = create_app()
 CORS(
     app,
-    origins=[
-        "http://localhost:5173",  # Vite's default port
-        "http://localhost:3000",  # For local development
-        "https://anythingmapping.pythonanywhere.com",  # Your production domain
-    ],
+    resources={
+        r"/*": {  # Allow all routes
+            "origins": [
+                "http://localhost:5173",
+                "http://localhost:5174",
+                "http://localhost:3000",
+                "https://anythingmapping.pythonanywhere.com",
+            ],
+            "methods": ["GET", "POST", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"],
+            "expose_headers": ["Content-Range", "X-Content-Range"],
+        }
+    },
 )
 
 

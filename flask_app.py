@@ -2,9 +2,12 @@
 
 from flask import jsonify, render_template
 from flask_cors import CORS
+from flask_migrate import Migrate
 from job_listings import create_app
+from job_listings.models.models import db
 
 app = create_app()
+migrate = Migrate(app, db)
 CORS(
     app,
     resources={
@@ -23,25 +26,34 @@ CORS(
 )
 
 
+# @app.route("/")
+# def home():
+#     from job_listings.models.models import Job
+
+#     jobs = Job.query.filter_by(status="active").order_by(Job.posted_date.desc()).all()
+#     return render_template("index.html", jobs=[job.to_dict() for job in jobs])
+
+
 @app.route("/")
-def home():
+def stac():
     from job_listings.api.jobs import JOBS
 
     return render_template("index.html", jobs=JOBS)
 
 
-@app.route("/stac")
-def stac():
-    from job_listings.api.jobs import JOBS
+# @app.route("/stac")
+# def stac():
+#     from job_listings.api.jobs import JOBS
 
-    return render_template("stac.html", jobs=JOBS)
+#     return render_template("stac.html", jobs=JOBS)
 
 
 @app.route("/api/jobs")
 def get_jobs():
-    from job_listings.api.jobs import JOBS
+    from job_listings.models.models import Job
 
-    return jsonify({"jobs": JOBS})
+    jobs = Job.query.filter_by(status="active").order_by(Job.posted_date.desc()).all()
+    return jsonify({"jobs": [job.to_dict() for job in jobs]})
 
 
 if __name__ == "__main__":

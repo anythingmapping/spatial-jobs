@@ -28,6 +28,8 @@ class Job(db.Model):
             "coordinates": self.coordinates,
             "description": self.description,
             "remote": self.remote,
-            "posted_date": self.posted_date.strftime("%Y-%m-%d"),
+            "posted_date": (
+                self.posted_date.strftime("%Y-%m-%d") if self.posted_date else None
+            ),
             "status": self.status,
         }

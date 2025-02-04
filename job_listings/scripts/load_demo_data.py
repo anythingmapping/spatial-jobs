@@ -1,9 +1,17 @@
 from datetime import datetime
 from flask import Flask
 from job_listings.models.models import db, Job
+import os
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///jobs.db"
+# Create the absolute path to the instance directory
+instance_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "instance")
+# Ensure the instance directory exists
+os.makedirs(instance_path, exist_ok=True)
+# Set the database URI to use the absolute path
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    f"sqlite:///{os.path.join(instance_path, 'jobs.db')}"
+)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
@@ -134,6 +142,9 @@ JOBS = [
 
 def load_demo_data():
     with app.app_context():
+        # Create all tables first
+        db.create_all()
+
         # Clear existing data
         Job.query.delete()
 

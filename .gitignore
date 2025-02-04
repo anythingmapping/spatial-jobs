@@ -40,8 +40,9 @@ frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
 
-# IDE
+# IDE or OS
 .idea/
 .vscode/
 *.swp
 *.swo
+*.DS_Store

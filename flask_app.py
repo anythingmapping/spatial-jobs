@@ -1,10 +1,11 @@
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import jsonify, render_template
+from flask import jsonify, render_template, request
 from flask_cors import CORS
 from flask_migrate import Migrate
 from job_listings import create_app
 from job_listings.models.models import db
+import requests
 
 app = create_app()
 migrate = Migrate(app, db)
@@ -26,26 +27,12 @@ CORS(
 )
 
 
-# @app.route("/")
-# def home():
-#     from job_listings.models.models import Job
-
-#     jobs = Job.query.filter_by(status="active").order_by(Job.posted_date.desc()).all()
-#     return render_template("index.html", jobs=[job.to_dict() for job in jobs])
-
-
-@app.route("/")
+@app.route("/", methods=["GET"])
 def stac():
-    from job_listings.api.jobs import JOBS
-
-    return render_template("index.html", jobs=JOBS)
-
-
-# @app.route("/stac")
-# def stac():
-#     from job_listings.api.jobs import JOBS
-
-#     return render_template("stac.html", jobs=JOBS)
+    api_url = f"{request.url_root}api/jobs"
+    response = requests.get(api_url)
+    jobs = response.json()["jobs"]
+    return render_template("index.html", jobs=jobs)
 
 
 @app.route("/api/jobs")

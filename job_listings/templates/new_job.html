@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Add New Job</h1>
+    <form id="jobForm" class="job-form">
+        <div class="form-group">
+            <label for="title">Job Title*</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="company">Company*</label>
+            <input type="text" id="company" name="company" required>
+        </div>
+
+        <div class="form-group">
+            <label for="location">Location*</label>
+            <input type="text" id="location" name="location" required>
+        </div>
+
+        <div class="form-group">
+            <label for="coordinates">Coordinates* [longitude, latitude]</label>
+            <input type="text" id="coordinates" name="coordinates" placeholder="e.g., [-0.1276, 51.5074]" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description*</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="remote" name="remote">
+                Remote Position
+            </label>
+        </div>
+
+        <button type="submit" class="submit-button">Create Job</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('jobForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        try {
+            const coordinates = JSON.parse(document.getElementById('coordinates').value);
+            const data = {
+                title: document.getElementById('title').value,
+                company: document.getElementById('company').value,
+                location: document.getElementById('location').value,
+                coordinates: coordinates,
+                description: document.getElementById('description').value,
+                remote: document.getElementById('remote').checked
+            };
+
+            const response = await fetch('/api/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('Job created successfully!');
+                window.location.href = '/';  // Redirect to home page
+            } else {
+                alert('Error: ' + result.error);
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+</script>
+
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .job-form {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .submit-button {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .submit-button:hover {
+        background-color: #2980b9;
+    }
+</style>
+{% endblock %}

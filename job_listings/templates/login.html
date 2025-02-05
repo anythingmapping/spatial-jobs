@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Login</h1>
+    <form id="loginForm" class="login-form">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit" class="submit-button">Login</button>
+        <p class="register-link">
+            Don't have an account? <a href="/register">Register here</a>
+        </p>
+    </form>
+</div>
+
+<style>
+    .form-container {
+        max-width: 400px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .login-form {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: document.getElementById('username').value,
+                    password: document.getElementById('password').value
+                })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                localStorage.setItem('token', result.token);
+                window.location.href = '/new';
+            } else {
+                alert('Error: ' + result.error);
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+</script>
+{% endblock %}

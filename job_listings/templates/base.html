@@ -7,31 +7,72 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #ffffff;
         }
 
         .navbar {
-            background-color: #333;
-            padding: 1rem;
-            color: white;
+            background-color: #ffffff;
+            padding: 1rem 2rem;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .navbar-title {
             font-size: 1.5rem;
             margin: 0;
-            text-align: center;
+            font-weight: 700;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .navbar-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-button {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-button.primary {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+        }
+
+        .nav-button.primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .nav-button.secondary {
+            background-color: transparent;
+            color: #4b5563;
+            border: 1px solid #e5e7eb;
+        }
+
+        .nav-button.secondary:hover {
+            background-color: #f9fafb;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             min-height: calc(100vh - 100px);
         }
     </style>
@@ -39,7 +80,15 @@
 
 <body>
     <nav class="navbar">
-        <h1 class="navbar-title">Spatial Jobs</h1>
+        <a href="/" class="navbar-title">Spatial Jobs</a>
+        <div class="navbar-actions">
+            {% if 'user_id' in session %}
+            <a href="/new" class="nav-button primary">Post Job</a>
+            <a href="/logout" class="nav-button secondary">Logout</a>
+            {% else %}
+            <a href="/login" class="nav-button primary">Post A Job</a>
+            {% endif %}
+        </div>
     </nav>
     <div class="container">
         {% block content %}{% endblock %}

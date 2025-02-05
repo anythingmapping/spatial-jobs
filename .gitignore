@@ -46,3 +46,9 @@ frontend/yarn-error.log*
 *.swp
 *.swo
 *.DS_Store
+
+# security & environment
+.env
+
+# Database
+*.db

@@ -13,8 +13,15 @@ def create_app():
 
     # Configuration
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+
+    # Set the instance path explicitly
+    instance_path = "/home/anythingmapping/spatial-jobs/instance"
+
+    # Use absolute path for database
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-        "DATABASE_URL", "sqlite:///jobs.db"
+        # "DATABASE_URL", "sqlite:///jobs.db" local setup
+        "DATABASE_URL",
+        f"sqlite:///{os.path.join(instance_path, 'jobs.db')}",
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -23,5 +30,9 @@ def create_app():
 
     # Register blueprints
     app.register_blueprint(jobs_bp)
+
+    # For debugging
+    print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
+    print(f"Instance Path: {instance_path}")
 
     return app

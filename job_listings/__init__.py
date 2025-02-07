@@ -5,6 +5,7 @@ from .models.models import db
 import os
 import logging
 from dotenv import load_dotenv
+import sqlite3
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -40,6 +41,17 @@ def create_app():
         # Initialize extensions
         db.init_app(app)
 
+        # Create tables if they don't exist
+        with app.app_context():
+            try:
+                db.create_all()
+                # Log table names
+                inspector = db.inspect(db.engine)
+                tables = inspector.get_table_names()
+                logger.info(f"Available tables: {tables}")
+            except Exception as e:
+                logger.error(f"Error creating/inspecting database: {e}", exc_info=True)
+
         # Register blueprints
         app.register_blueprint(jobs_bp)
 
@@ -53,6 +65,9 @@ def create_app():
         def handle_exception(error):
             logger.error(f"Unhandled exception: {error}", exc_info=True)
             return "Internal Server Error", 500
+
+        # At the start of create_app
+        logger.info(f"SQLite version: {sqlite3.sqlite_version}")
 
         return app
 
